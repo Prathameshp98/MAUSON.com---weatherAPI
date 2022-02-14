@@ -1,0 +1,93 @@
+    
+   
+<%- include("partials/header"); -%>
+
+    <!-- data boxes -->
+
+    <div id="data-boxes" class="row">
+        <div class="col-6">
+            <div class="row left">
+                <div class="col-12 left-element">
+                    <div class="row">
+                        <h5>Current Weather: <%= city %></h5>
+                        <div id="temp-box" class="col-7">
+                            <img class="weather-img" src="<%= imageUrl %>">
+                            <h1 class="tempData"><%= tempData %>°C</h1>
+                            <p>Feels Like <%= feels_like %>°C</p>
+                        </div>
+                        <div id="wind-box" class="col-5">
+                            <p class="ptag">Wind<span class="w-data"><%= wind %> Km/Hr</span></p>
+                            <hr class="hrule">
+                            <p class="ptag">Wind Gusts<span class="w-data"><%= gust %> Km/Hr</span></p>
+                            <hr class="hrule">
+                            <p class="ptag">Humidity<span class="w-data"><%= humidity %>%</span></p>
+                        </div>
+                        <h3><%= description %></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row left">
+                <div class="col-12 left-element">
+                    <div class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                        dolore magna aliqua. Erat imperdiet sed euismod nisi porta lorem mollis aliquam. Lacus vestibulum sed
+                        arcu non odio. Eget dolor morbi non arcu risus quis varius quam quisque. In ante metus dictum at tempor
+                        commodo. Diam volutpat commodo sed egestas egestas. Ac turpis egestas sed tempus urna et pharetra
+                        pharetra massa. Porttitor eget dolor morbi non arcu. Tempus quam pellentesque nec nam. Vestibulum sed
+                        arcu non odio euismod. Suspendisse interdum consectetur libero id. Amet mattis vulputate enim nulla
+                        aliquet porttitor lacus luctus.</div>
+                </div>
+            </div>
+            <div class="row left">
+                <div class="col-12 left-element">
+                    <div class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                        dolore magna aliqua. Erat imperdiet sed euismod nisi porta lorem mollis aliquam. Lacus vestibulum sed
+                        arcu non odio. Eget dolor morbi non arcu risus quis varius quam quisque. In ante metus dictum at tempor
+                        commodo. Diam volutpat commodo sed egestas egestas. Ac turpis egestas sed tempus urna et pharetra
+                        pharetra massa. Porttitor eget dolor morbi non arcu. Tempus quam pellentesque nec nam. Vestibulum sed
+                        arcu non odio euismod. Suspendisse interdum consectetur libero id. Amet mattis vulputate enim nulla
+                        aliquet porttitor lacus luctus.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="row right">
+                <div class="col-12 right-element">
+                    <div class="">
+                        <h2 class="highlight-heading">Highlights</h2>
+                        <div class="row">
+                            <div class="col">
+                                <h4><%= randomCity1 %><span class="h-data"><h1><%= randomCity1_temp %>°C</h1></span></h4>
+                                <p class="h-data-feelsLike">Feels Like <%= randomCity1_feelsLike %></p>
+                            </div>
+                            <hr class="hrule">
+                            <div class="col">
+                                <h4><%= randomCity2 %><span class="h-data"><h1><%= randomCity2_temp %>°C</h1></span></h4>
+                                <p class="h-data-feelsLike">Feels Like <%= randomCity1_feelsLike %></p>
+                            </div>
+                            <hr class="hrule">
+                            <div class="col">
+                                <h4><%= randomCity3 %><span class="h-data"><h1><%= randomCity3_temp %>°C</h1></span></h4>
+                                <p class="h-data-feelsLike">Feels Like <%= randomCity1_feelsLike %></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row right right-bottom">
+                <div class="col-12 right-element">
+                    <div class="">
+                        <br>
+                        <h1>Hey</h1>
+                        <h4>Want to get some latest weather updates delivered to your inbox, you are just one step away!</h4>
+                        <br>
+                        <form action="/newsletter">
+                            <button class="btn btn-secondary btn-md" type="submit">Get Started</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<%- include("partials/footer"); -%>

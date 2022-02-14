@@ -1,0 +1,351 @@
+
+/* navbar */
+
+#navbar-settings {
+    margin-bottom: 50px;
+}
+
+#navbar-settings-dashboard {
+    margin-bottom: 50px;
+    padding: 20px 0px;
+}
+
+#navbar-items {
+    margin: 0px 15%;
+}
+
+#navbar-items-signup {
+    margin: 0px 15%;
+    padding-top: 20px;
+    padding-left: 65%
+}
+
+#navbar-items-login {
+    margin: 0px 15%;
+    padding-top: 20px;
+    padding-left: 51%
+}
+
+.signup-button {
+    text-decoration: none;
+    color: black;
+}
+
+.signup-button:hover {
+    color: grey;
+}
+
+/* main structure */
+
+#data-boxes {
+    width: 70%;
+    margin: 0px auto;
+}
+
+.right {
+    height: 50%;
+    padding: 10px;
+}
+
+.right-element {
+    margin: 5px;
+    padding: 10px;
+    background-color: #D9D7F1;
+}
+
+.left {
+    padding: 10px;   
+}
+
+.left-element {
+    margin: 5px;
+    padding: 10px;
+    background-color: #D9D7F1; 
+}
+
+/* footer */
+
+footer {
+    margin-top: 75px;
+    height: 300px;
+    background-color: azure;
+}
+
+#footer-content {
+    width: 70%;
+    margin: 0px 15%;
+}
+
+#footer-text {
+    text-align: center;
+    padding: 20px;
+}
+
+/* top left box */
+
+#temp-box {
+    padding-top: 20px;
+}
+
+.weather-img {
+    width: 30%;
+    float: left;
+}
+
+.tempData {
+    position: relative;
+}
+
+#wind-box {
+    margin: 15px 0px;
+}
+
+.hrule {
+    margin: 5px auto;
+    width: 75%;
+    height: 3px;
+}
+
+.ptag {
+    margin:0px;
+}
+
+.w-data {
+    float: right;
+}
+
+/* top right box */
+
+.highlight-heading {
+    margin-bottom: 50px;
+}
+
+.h-data {
+    float: right;
+}
+
+.h-data-feelsLike {
+    float: left;
+}
+
+/* right bottom box */
+
+.form-signin {
+  width: 100%;
+  max-width: 350px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.top {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.middle {
+    border-radius: 0px;
+    margin-bottom: -1px;
+}
+
+.bottom {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* login page styles */
+
+h1 {
+    padding-bottom: 20px;
+    color: #423F3E;
+}
+
+a {
+    text-decoration: none;
+    color: white
+}
+
+.login-body {
+    background: #FFE194;
+}
+
+.card-register {
+    border: none;
+    height: 700px
+}
+
+.card-login {
+    border: none;
+    height: 430px
+}
+
+.password-field {
+    margin-bottom: 35px;
+}
+
+.re-enter-password {
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.login-button {
+    margin-bottom: 20px;
+}
+
+.header {
+    padding-bottom: 30px;
+}
+
+.header img {
+    float: left;
+}
+
+#signIn-button {
+    margin-top: 30px;
+}
+
+.dashboard-button {
+    margin-left: 15px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+/* Dashboard styles */
+
+.hidden-user {
+    display: none;
+}
+
+.dashboard-welcome {
+    background-color: #D9D7F1;
+    margin: 0px 15%;
+    padding: 30px 20px;
+}
+
+.username-text {
+    margin-bottom: 0px;
+}
+
+.welcome-text {
+}
+
+.info-box {
+    max-width: 70%;
+    margin: 50px auto 100px auto;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+  }
+  
+  
+  .item {
+    flex-direction: column;
+    min-height: 70px;
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid #F1F1F1;
+  }
+  
+  .button-item {
+    flex-direction: row;
+    min-height: 70px;
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid #F1F1F1;
+  }
+
+  .item:last-child {
+    border-bottom: 0;
+  }
+  
+  input:checked+p {
+    text-decoration: line-through;
+    text-decoration-color: #F1F1F1;
+  }
+  
+  input[type="checkbox"] {
+    margin: 20px;
+  }
+  
+  .each-item {
+    display: inline-block;
+    margin: 0;
+    padding-left: 70px;
+    font-size: 20px;
+    color: #00204a;
+  }
+  
+  form.item {
+    text-align: center;
+    margin-left: 20px;
+  }
+  
+ .add-button {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border-color: transparent;
+    background-color: grey;
+    color: #fff;
+    font-size: 30px;
+    padding-bottom: 6px;
+    border-width: 0;
+  }
+  
+  input[type="text"] {
+    text-align: center;
+    height: 60px;
+    top: 10px;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    font-weight: 200;
+    width: 90%;
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"]:focus {
+    outline: none;
+    box-shadow: inset 0 -3px 0 0 grey;
+  }
+  
+  ::placeholder {
+    color: grey;
+    opacity: 1;
+  }
+
+  /* After Dashboard */
+
+  .text-1 {
+      display: inline-block;
+  }
+
+  .text-2 {
+      display: inline-block;
+  }
+
+  .feels-item {
+      float: left;
+      margin: 10px 0px 20px 70px;
+  }
+
+  .img-item {
+      float: right;
+      margin: 0px 50px 0px 0px;
+  }
+
+  .temp-item{
+    float: right;
+    margin: 0px 50px 0px 0px;
+    padding-bottom: 0px;
+    }
