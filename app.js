@@ -1,5 +1,6 @@
 //jshint esversion:6
 
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -39,7 +40,7 @@ const arr3 = ["Pune", "Surat", "Nagpur", "Manali", "Jammu", "Jaipur"];
 
 app.get("/", function (req, res) {
 
-    const apiKey = "fce6af2d590addcccc0ce8d59222afba";
+    const apiKey = process.env.SECRET;
     const unit = "metric";
     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + "Panvel" + "&appid=" + apiKey + "&units=" + unit + "#";
     var newUrl = url;
@@ -127,7 +128,7 @@ app.get("/", function (req, res) {
 app.post("/", function (req, res) {
     const city = _.capitalize(req.body.searchData);
 
-    const apiKey = "fce6af2d590addcccc0ce8d59222afba";
+    const apiKey = process.env.SECRET;
     const unit = "metric";
     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=" + unit + "#";
     var newUrl = url;
@@ -291,7 +292,7 @@ app.post("/signIn", function (req, res) {
                     const arr = foundEmail.email.split(" ");
                     const userName = arr.join(".");
 
-                    const apiKey = "fce6af2d590addcccc0ce8d59222afba";
+                    const apiKey = process.env.SECRET;
                     const unit = "metric";
                     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + "Panvel" + "&appid=" + apiKey + "&units=" + unit + "#";
                     var newUrl = url;
@@ -401,7 +402,7 @@ app.post("/login_home", function (req, res) {
 
     const city = _.capitalize(req.body.searchData);
 
-    const apiKey = "fce6af2d590addcccc0ce8d59222afba";
+    const apiKey = process.env.SECRET;
     const unit = "metric";
     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=" + unit + "#";
     var newUrl = url;
@@ -490,7 +491,7 @@ app.get("/dashboard", function (req, res) {
     const actualUser = req.query.valid;
     const arr = req.query.valid2.split(",");
 
-    const apiKey = "fce6af2d590addcccc0ce8d59222afba";
+    const apiKey = process.env.SECRET;
     const unit = "metric";
     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + "" + "&appid=" + apiKey + "&units=" + unit + "#";
     var dashurl = url;
