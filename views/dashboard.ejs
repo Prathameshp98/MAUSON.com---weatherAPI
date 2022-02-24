@@ -21,14 +21,14 @@
 
 <body>
 
-    <nav class="navbar navbar-light bg-light" id="navbar-settings-dashboard">
-        <div id="navbar-items">
-            <a class="navbar-brand" href="#">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <a id="mausom-name" class="navbar-brand" href="#">
             <img src="/images/sun.png" width="30" height="30" class="d-inline-block align-top" alt="">
             MAUSAM.com
-            </a>
-        </div>
-    </nav>
+        </a>
+        <a id="home-link" class="p-2 text-dark" href="/login_home?actualUser=<%= actualUser %>">Home</a>
+        </nav>
+    </div>
 
     <div class="dashboard-welcome">
         <p class="hidden-user"><%= actualUser %></p>

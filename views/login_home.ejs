@@ -5,7 +5,7 @@
 <!-- data boxes -->
 
 <div id="data-boxes" class="row">
-    <div class="col-6">
+    <div class="col-md-6">
         <div class="row left">
             <div class="col-12 left-element">
                 <div class="row">
@@ -28,28 +28,66 @@
         </div>
         <div class="row left">
             <div class="col-12 left-element">
-                <div class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Erat imperdiet sed euismod nisi porta lorem mollis aliquam. Lacus vestibulum sed
-                    arcu non odio. Eget dolor morbi non arcu risus quis varius quam quisque. In ante metus dictum at tempor
-                    commodo. Diam volutpat commodo sed egestas egestas. Ac turpis egestas sed tempus urna et pharetra
-                    pharetra massa. Porttitor eget dolor morbi non arcu. Tempus quam pellentesque nec nam. Vestibulum sed
-                    arcu non odio euismod. Suspendisse interdum consectetur libero id. Amet mattis vulputate enim nulla
-                    aliquet porttitor lacus luctus.</div>
+                <div class="">
+                    <div class="">
+                        <div class="row visibility-header">
+                            <div class="col-6">
+                                <h2>Visibility</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col visibility-value">
+                                <h3><%= visibility %> <span><p>Meters</p></span></h3>
+                            </div>
+                            <div class="col visibility-status">
+                                
+                                <% if(visibility <= 50){ %>
+                                    <h3>Dense Fog</h3>
+                                <% } else if(visibility > 50 && visibility <= 200) { %>
+                                    <h3>Thick Fog</h3>
+                                <% } else if(visibility > 200 && visibility <= 500){ %>
+                                    <h3>Moderate Fog</h3>
+                                <% } else if(visibility > 500 && visibility <= 1000) { %>
+                                    <h3>Light Fog</h3>
+                                <% } else if(visibility > 1000 && visibility <= 2000){ %>
+                                    <h3>Thin Fog</h3>
+                                <% } else if(visibility > 2000 && visibility <= 4000) { %>
+                                    <h3>Haze</h3>
+                                <% } else if(visibility > 4000 && visibility <= 10000){ %>
+                                    <h3>Light Haze</h3>
+                                <% } else if(visibility > 10000 && visibility <= 20000){ %>
+                                    <h3>Clear</h3>
+                                <% } else if(visibility > 20000 && visibility <= 50000) { %>
+                                    <h3>Very Clear</h3>
+                                <% } else if(visibility > 50000 && visibility <= 270000){ %>
+                                    <h3>Exceptionally Clear</h3>
+                                <% } else if(visibility > 270000){ %>
+                                    <h3>Pure Air</h3>
+                                <% } %>
+                            
+                            </div>
+                        </div>
+                        <div class="row know-more">
+                            <p>Know more →</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row left">
             <div class="col-12 left-element">
-                <div class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Erat imperdiet sed euismod nisi porta lorem mollis aliquam. Lacus vestibulum sed
-                    arcu non odio. Eget dolor morbi non arcu risus quis varius quam quisque. In ante metus dictum at tempor
-                    commodo. Diam volutpat commodo sed egestas egestas. Ac turpis egestas sed tempus urna et pharetra
-                    pharetra massa. Porttitor eget dolor morbi non arcu. Tempus quam pellentesque nec nam. Vestibulum sed
-                    arcu non odio euismod. Suspendisse interdum consectetur libero id. Amet mattis vulputate enim nulla
-                    aliquet porttitor lacus luctus.</div>
+                <div class="pricing-box">
+                    <h2>Pricing</h2>
+                    <p>Get weather data for any location on the globe immediately with our superb APIs! 
+                        Start using minute forecasts, hourly forecasts, 
+                        history and other weather data in your applications for free. For more functionality, 
+                        please consider our generous subscriptions. <a class="pricing-link" href="/pricing?userName=<%= userName %>">Click Here</a> to know more.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
         <div class="row right">
             <div class="col-12 right-element">
                 <div class="">

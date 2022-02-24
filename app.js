@@ -8,6 +8,8 @@ const _ = require("lodash");
 const mongoose = require("mongoose");
 const https = require("https");
 const alert = require("alert");
+const bcrypt = require("bcrypt"); 
+const saltRounds = 10;
 
 const app = express();
 
@@ -18,13 +20,14 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb+srv://admin_prathamesh:1210Nanu@cluster0.hm590.mongodb.net/weatherDB");
+const DATABASE_KEY = process.env.DATABASE_KEY;
+mongoose.connect(DATABASE_KEY);
 
 //create userData schema
 const userDataSchema = {
     email: String,
     password: String,
-    isLogin: Boolean,
+    isSubscribed: Boolean,
     home: String,
     favourites: []
 };
@@ -40,7 +43,7 @@ const arr3 = ["Pune", "Surat", "Nagpur", "Manali", "Jammu", "Jaipur"];
 
 app.get("/", function (req, res) {
 
-    const apiKey = process.env.SECRET;
+    const apiKey = process.env.API_KEY;
     const unit = "metric";
     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + "Panvel" + "&appid=" + apiKey + "&units=" + unit + "#";
     var newUrl = url;
@@ -91,6 +94,7 @@ app.get("/", function (req, res) {
             const description = weatherData.weather[0].main;
             const imageUrl = "http://openweathermap.org/img/wn/" + image + "@2x.png";
 
+            const visibility = weatherData.visibility;
 
             res.render("home", {
                 city: "Panvel",
@@ -101,6 +105,7 @@ app.get("/", function (req, res) {
                 gust: gust,
                 humidity: humidity,
                 description: description,
+                visibility: visibility,
 
                 randomCity1: highlightedCity[0],
                 randomCity1_temp: highlightedCityTemp[0],
@@ -128,7 +133,7 @@ app.get("/", function (req, res) {
 app.post("/", function (req, res) {
     const city = _.capitalize(req.body.searchData);
 
-    const apiKey = process.env.SECRET;
+    const apiKey = process.env.API_KEY;
     const unit = "metric";
     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=" + unit + "#";
     var newUrl = url;
@@ -182,6 +187,8 @@ app.post("/", function (req, res) {
             const description = weatherData.weather[0].main;
             const imageUrl = "http://openweathermap.org/img/wn/" + image + "@2x.png";
 
+            const visibility = weatherData.visibility;
+
 
             res.render("home", {
                 city: city,
@@ -192,6 +199,7 @@ app.post("/", function (req, res) {
                 gust: gust,
                 humidity: humidity,
                 description: description,
+                visibility: visibility,
 
                 randomCity1: highlightedCity[0],
                 randomCity1_temp: highlightedCityTemp[0],
@@ -233,21 +241,31 @@ app.post("/signUp", function (req, res) {
     const email = _.lowerCase(req.body.emailInput);
     const password = req.body.passwordInput;
 
-    userData.findOne({
-        email: email
-    }, function (err, foundEmail) {
+    userData.findOne({email: email}, function (err, foundEmail) {
         if (foundEmail) {
             res.redirect("/userExists");
         } else {
-            const newUser = new userData({
-                email: email,
-                password: password,
-                isLogin: false,
-                home: "",
-                favourites: []
+
+            bcrypt.hash(password, saltRounds, function(err,hash){
+
+                const newUser = new userData({
+                    email: email,
+                    password: hash,
+                    isSubscribed: false,
+                    home: "",
+                    favourites: ["Mumbai"]
+                });
+
+                newUser.save(function(err){
+                    if(err){
+                        console.log(err);
+                    } else {
+                        res.redirect("/signIn");
+                    }
+                });
+
             });
-            newUser.save();
-            res.redirect("/signIn");
+
         }
 
     });
@@ -266,33 +284,16 @@ app.post("/signIn", function (req, res) {
     const email = _.lowerCase(req.body.emailInput);
     const password = req.body.passwordInput;
 
-    userData.findOne({
-        email: email
-    }, function (err, foundEmail) {
-        if (foundEmail) {
+    userData.findOne({email: email}, function (err, foundUser) {
+        if (foundUser) {
 
-            userData.findOne({
-                email: email,
-                password: password
-            }, function (err, foundPass) {
-                if (foundPass) {
+            bcrypt.compare(password, foundUser.password, function(err,result){
+                if(result === true){
 
-                    userData.findOneAndUpdate({
-                        email: email
-                    }, {
-                        isLogin: true
-                    }, function (err, data) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            console.log(data);
-                        }
-                    });
-
-                    const arr = foundEmail.email.split(" ");
+                    const arr = foundUser.email.split(" ");
                     const userName = arr.join(".");
 
-                    const apiKey = process.env.SECRET;
+                    const apiKey = process.env.API_KEY;
                     const unit = "metric";
                     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + "Panvel" + "&appid=" + apiKey + "&units=" + unit + "#";
                     var newUrl = url;
@@ -342,6 +343,7 @@ app.post("/signIn", function (req, res) {
                             const description = weatherData.weather[0].main;
                             const imageUrl = "http://openweathermap.org/img/wn/" + image + "@2x.png";
 
+                            const visibility = weatherData.visibility;
 
                             res.render("login_home", {
                                 userName: userName,
@@ -353,6 +355,7 @@ app.post("/signIn", function (req, res) {
                                 gust: gust,
                                 humidity: humidity,
                                 description: description,
+                                visibility: visibility,
 
                                 randomCity1: highlightedCity[0],
                                 randomCity1_temp: highlightedCityTemp[0],
@@ -373,12 +376,9 @@ app.post("/signIn", function (req, res) {
 
                     });
 
-
-
                 } else {
                     res.redirect("/incorrectPass");
                 }
-
             });
 
         } else {
@@ -391,9 +391,92 @@ app.post("/signIn", function (req, res) {
 
 app.get("/login_home", function (req, res) {
 
-    res.render("login_home", {
+    const user = req.query.actualUser;
+
+    const apiKey = process.env.API_KEY;
+    const unit = "metric";
+    const url = "https://api.openweathermap.org/data/2.5/weather?q=" + "Panvel" + "&appid=" + apiKey + "&units=" + unit + "#";
+    var newUrl = url;
+
+    highlightedCity = [];
+    var randomNum = Math.floor((Math.random()) * 6);
+    highlightedCity.push(arr1[randomNum]);
+    randomNum = Math.floor((Math.random()) * 6);
+    highlightedCity.push(arr2[randomNum]);
+    randomNum = Math.floor((Math.random()) * 6);
+    highlightedCity.push(arr3[randomNum]);
+
+    const highlightedCityTemp = [];
+    const highlightedCityFeelsLike = [];
+
+
+    for (var i = 0; i < highlightedCity.length; i++) {
+
+        newUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + highlightedCity[i] + "&appid=" + apiKey + "&units=" + unit + "#";
+
+        https.get(newUrl, function (response) {
+
+            response.on("data", function (data) {
+                const weatherData = JSON.parse(data);
+                highlightedCityTemp.push(weatherData.main.temp);
+                highlightedCityFeelsLike.push(weatherData.main.feels_like);
+
+            });
+
+        });
+
+    }
+
+    console.log(highlightedCityTemp);
+
+    https.get(url, function (response) {
+
+        response.on("data", function (data) {
+            const weatherData = JSON.parse(data);
+            const tempData = weatherData.main.temp;
+            const feels_like = weatherData.main.feels_like;
+            const image = weatherData.weather[0].icon;
+            const wind = weatherData.wind.speed;
+            const gust = weatherData.wind.gust;
+            const humidity = weatherData.main.humidity;
+            const description = weatherData.weather[0].main;
+            const imageUrl = "http://openweathermap.org/img/wn/" + image + "@2x.png";
+
+            const visibility = weatherData.visibility;
+
+            res.render("login_home", {
+                userName: user,
+                city: "Panvel",
+                imageUrl: imageUrl,
+                tempData: tempData,
+                feels_like: feels_like,
+                wind: wind,
+                gust: gust,
+                humidity: humidity,
+                description: description,
+                visibility: visibility,
+
+                randomCity1: highlightedCity[0],
+                randomCity1_temp: highlightedCityTemp[0],
+                randomCity1_feelsLike: highlightedCityFeelsLike[0],
+
+                randomCity2: highlightedCity[1],
+                randomCity2_temp: highlightedCityTemp[1],
+                randomCity2_feelsLike: highlightedCityFeelsLike[1],
+
+                randomCity3: highlightedCity[2],
+                randomCity3_temp: highlightedCityTemp[2],
+                randomCity3_feelsLike: highlightedCityFeelsLike[2]
+
+            });
+
+
+        });
+
 
     });
+
+
 });
 
 app.post("/login_home", function (req, res) {
@@ -402,7 +485,7 @@ app.post("/login_home", function (req, res) {
 
     const city = _.capitalize(req.body.searchData);
 
-    const apiKey = process.env.SECRET;
+    const apiKey = process.env.API_KEY;
     const unit = "metric";
     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=" + unit + "#";
     var newUrl = url;
@@ -451,6 +534,7 @@ app.post("/login_home", function (req, res) {
             const description = weatherData.weather[0].main;
             const imageUrl = "http://openweathermap.org/img/wn/" + image + "@2x.png";
 
+            const visibility = weatherData.visibility;
 
             res.render("login_home", {
                 userName: user,
@@ -462,6 +546,7 @@ app.post("/login_home", function (req, res) {
                 gust: gust,
                 humidity: humidity,
                 description: description,
+                visibility: visibility,
 
                 randomCity1: highlightedCity[0],
                 randomCity1_temp: highlightedCityTemp[0],
@@ -490,8 +575,9 @@ app.get("/dashboard", function (req, res) {
 
     const actualUser = req.query.valid;
     const arr = req.query.valid2.split(",");
+    const userName = req.query.valid3;
 
-    const apiKey = process.env.SECRET;
+    const apiKey = process.env.API_KEY;
     const unit = "metric";
     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + "" + "&appid=" + apiKey + "&units=" + unit + "#";
     var dashurl = url;
@@ -523,6 +609,7 @@ app.get("/dashboard", function (req, res) {
         response.on("data", function (data) {
 
             res.render("AfterDashboard", {
+                userName: userName,
                 actualUser: actualUser,
                 foundItems: arr,
                 temp: temp,
@@ -541,13 +628,12 @@ app.get("/dashboard", function (req, res) {
 
 app.post("/dashboard", function (req, res) {
 
-    const arr = req.body.userName.split(".");
+    const arr = req.body.userName.split(" ");
     const user = _.capitalize(arr[0]);
     const actual_user = arr.join(" ");
 
     userData.find({email: actual_user}, function (err, foundItem) {
-        var str = encodeURIComponent(actual_user);
-        res.redirect("/dashboard?valid=" + str + "&valid2=" + foundItem[0].favourites);
+        res.redirect("/dashboard?valid=" + actual_user + "&valid2=" + foundItem[0].favourites + "&valid3=" + user);
 
     });
 
@@ -632,6 +718,14 @@ app.get("/incorrectPass", function (req, res) {
 
     res.render("incorrectPass", {
 
+    });
+});
+
+app.get("/pricing",function(req,res){
+
+    console.log(req.query.userName);
+    res.render("pricing",{
+       userName: req.query.userName
     });
 });
 
