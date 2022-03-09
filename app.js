@@ -291,7 +291,7 @@ app.post("/signIn", function (req, res) {
                 if(result === true){
 
                     const arr = foundUser.email.split(" ");
-                    const userName = arr.join(".");
+                    const userName = arr.join(" ");
 
                     const apiKey = process.env.API_KEY;
                     const unit = "metric";
@@ -631,8 +631,10 @@ app.post("/dashboard", function (req, res) {
     const arr = req.body.userName.split(" ");
     const user = _.capitalize(arr[0]);
     const actual_user = arr.join(" ");
+    console.log(actual_user);
 
     userData.find({email: actual_user}, function (err, foundItem) {
+        console.log(foundItem[0].favourites);
         res.redirect("/dashboard?valid=" + actual_user + "&valid2=" + foundItem[0].favourites + "&valid3=" + user);
 
     });
